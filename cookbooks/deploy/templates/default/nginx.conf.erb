@@ -1,5 +1,5 @@
 
-user www-data;
+user <%= node['deploy']['username'] %>;
 worker_processes 6;
 pid /var/run/nginx.pid;
 
