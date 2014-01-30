@@ -1,0 +1,4 @@
+root=<%= node['deploy']['dir'] %>
+root=ssh://root@<%= node['deploy']['syncip'] %>/<%= node['deploy']['dir'] %>
+batch = true
+auto = true

@@ -1,0 +1,22 @@
+Данный кукбук решает задачу развертывания и синхронизации 2-х серверов обслуживающих статику с помощью Nginx.
+Поставленная задача звучала так  
+
+"As a company, we have 2 web servers to serve files. Write a chef cookbook that sets up nginx to serve static files from these 2 servers.
+1- Keep in mind that balancer sends requests using round-robin routing policy, so files should be in sync on both servers.
+2 - You can use any existing solutions and code."
+
+Итак для реализации задачи понадобились следующие пакеты Nginx, Unison, sshpass.
+Также решение предусматривает что сервер с которого будет происходить синхронизация (на котором не настраивается unison) должен быть настроен первым.
+
+В фале cookbooks/attributes/default.rb - Определенны переменные по умолчанию, которые мжно переопределить в файле ноды. 
+Он содержит следующие переменные:
+default['deploy']['sitename'] - название проекта учавствует в конфигурации Nginx
+default['deploy']['dir'] - путь кде лежат фалы, которые отдает Nginx
+default['deploy']['username'] - пользователь от которого запущен nginx 
+default['deploy']['syncip'] - адрес сервера с которым будет происходить синхронизация (на нем не настраивается Unison и он должен быть настроен первым)
+default['deploy']['passwd'] - пароль от пользователя root на сервере адрес которго указан в предыдущей переменной 
+default['deploy']['master'] - нужно выставить в true для серера который настраивается вторым (отвечает за настройку unison)
+default['deploy']['minutes'] - количество минут через которое осуществлять синхронизацию
+default['deploy']['initialsync'] - флаг отвечающий за перфичную синхронизацию, необходимо ли ее проводить прои настройке.
+
+Unison - программа двухсторонней синхронизации т.е. не важно на каком сервере произошли изменения после синхронизации папки станут идентичными.

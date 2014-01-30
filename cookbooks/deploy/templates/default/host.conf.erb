@@ -1,0 +1,20 @@
+
+server {
+  listen   80 default;
+
+  access_log  /var/log/nginx/<%= node['deploy']['sitename'] %>-access.log;
+  error_log /var/log/nginx/<%= node['deploy']['sitename'] %>-error.log;
+
+  root   <%= node['deploy']['dir'] %>;
+  client_max_body_size 1G;
+
+  sendfile on;
+
+  location / {
+   index index.html index.htm;
+  }
+  location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|pdf|ppt|txt|bmp|rtf|js)$ {
+      access_log off;
+      expires 3d;
+      }
+}

@@ -1,0 +1,3 @@
+{"deploy":{
+	"master": true},
+"run_list":["recipe[deploy]"]}
